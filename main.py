@@ -10,6 +10,10 @@ def main() -> None:
     # Process the DataFrame
     print(datasheet_df.head())
 
+    print(datasheet_df["Cat Description"].value_counts())
+
+    print(datasheet_df.isna().sum())
+
 
 def get_datasheet(data_path: Path) -> pd.DataFrame:
     try:
