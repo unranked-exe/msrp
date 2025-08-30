@@ -2,8 +2,6 @@ from pathlib import Path
 
 import pandas as pd
 
-
-
 data_path = Path("data_store")
 datasheet_csv = data_path / "datasheet.csv"
 
@@ -15,7 +13,7 @@ def main() -> None:
     print(datasheet_df["Cat Description"].value_counts())
 
     print(datasheet_df.isna().sum())
-    
+
     print(datasheet_df.duplicated().sum())
     print(datasheet_df[datasheet_df[["STYLE Description","GBP G - MSRP"]].duplicated()])
 
