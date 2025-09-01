@@ -21,7 +21,7 @@ except KeyError as e:
     raise ValueError(f"Missing environment variable: {e}")
 
 
-#DATA MODEL FOR SHOES
+#DATA MODEL FOR SHOES (TRANSFORM)
 class SearchItem(BaseModel):
     productId: str  # noqa: N815
     displayName: str  # noqa: N815
@@ -34,7 +34,7 @@ class SearchResults(BaseModel):
     searchTerm: str  # noqa: N815
     items: list[SearchItem]
 
-
+#EXTRACTOR
 def prepare_query() -> str:
     # Prepare the search query
     params = {
@@ -53,6 +53,7 @@ def get_datasheet(data_path: Path) -> pd.DataFrame:
         print(f"Error reading datasheet: {e}")
         return pd.DataFrame()  # Return an empty DataFrame on error
 
+#TRANSFORM
 def get_json(data_path: Path) -> dict:
     try:
         with Path.open(data_path / "search_res.json") as f:
@@ -64,9 +65,11 @@ def get_json(data_path: Path) -> dict:
         print(f"Error decoding JSON: {e}")
         return {}
 
+#EXTRACTOR
 def create_client() -> Client:
     return Client(impersonate=Impersonate.Chrome137)
 
+#MIX OF EXTRACTOR AND TRANSFORM
 async def search_api(client: Client) -> None:
     # THIS IS TO PREVENT EXCESS QUERIES BEING SENT TO API SO SAVED JSON LOCALLY ON FILE
     #response = await client.get(SEARCH_QUERY_URL)
@@ -74,6 +77,7 @@ async def search_api(client: Client) -> None:
     #print(response.json())
     json_res = get_json(data_path)
     print(json_res)
+    #TRANSFORM
     print(json_res["raw"]["itemList"])
     return SearchResults(**json_res["raw"]["itemList"])
 
