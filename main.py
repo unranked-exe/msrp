@@ -70,8 +70,6 @@ def search_api() -> SearchResults:
     logger.info(type(results))
     return results
 
-
-
 # TO REDO AND REDESIGN WITH NEW PROJECT IDEA
 async def main() -> None:
 
