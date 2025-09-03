@@ -1,12 +1,14 @@
 import asyncio
 import os
+
+#from loader import Load
+import time
 from pathlib import Path
 from urllib.parse import urlencode
 
-import pandas as pd
 from extract import Extractor
 from loguru import logger
-from transform import SearchResults, Transform
+from transform import SearchItem, SearchResults, Transform
 
 data_path = Path("data_store")
 datasheet_csv = data_path / "datasheet.csv"
@@ -22,6 +24,7 @@ except KeyError as e:
 
 e = Extractor(data_path)
 t = Transform()
+#l = Load()
 
 #DATA MODEL FOR SHOES (TRANSFORM)
 
@@ -59,17 +62,36 @@ def search_api() -> SearchResults:
     logger.info("Fetching local JSON")
     json_res = e.fetch_local_json("search_res.json") #TESTS IF LOCAL FILE CONTAINING SEARCH_API RES CAN BE READ FROM EXTRACTOR CLASS
 
+    essential_items = json_res["raw"]["itemList"]
+
     #json_real_res = e.fetch_json(test_url()) #FETches testurl
-    results = t.search_results(json_res["raw"]["itemList"])
+    results = t.search_results(essential_items)
+    #results.time_of_request = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
     logger.info(f"Transformed {results.count} items from search results.")
     logger.info(type(results))
     return results
 
+
+
 # TO REDO AND REDESIGN WITH NEW PROJECT IDEA
 async def main() -> None:
 
-    logger.info(search_api())
-    #product_api(client, search_results.items[0])
+    res = search_api()
+    logger.info("Attempting to convert search results to DataFrame")
+    search_results: dict[str, any] = dict(res)
+    search_items: list[SearchItem] = search_results.pop("items")
+
+    logger.info(f"Extracted {len(search_items)} search items.")
+
+    search_res_df = t.create_df([search_results], search_results.keys())
+
+    print(search_res_df)
+
+    search_items: list[dict[str, any]] = [dict(item) for item in search_items]
+    logger.info(type(search_items))
+    logger.info(search_items[0])
+    products_df = t.create_df(search_items, SearchItem.model_fields.keys())
+    print(products_df)
 
 
 if __name__ == "__main__":

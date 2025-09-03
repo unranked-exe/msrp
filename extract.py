@@ -2,7 +2,6 @@
 import asyncio
 import json
 from pathlib import Path
-from urllib.parse import urlencode
 
 from loguru import logger
 from rnet import BlockingClient, Client, Impersonate
