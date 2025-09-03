@@ -1,16 +1,15 @@
 import asyncio
 import os
-
-#from loader import Load
-import time
 from pathlib import Path
 from urllib.parse import urlencode
 
 from extract import Extractor
+from loader import Load
 from loguru import logger
 from transform import SearchItem, SearchResults, Transform
 
 data_path = Path("data_store")
+results_path = data_path / "results"
 datasheet_csv = data_path / "datasheet.csv"
 
 # FOR SCRAPING Manufacturer Website
@@ -24,7 +23,7 @@ except KeyError as e:
 
 e = Extractor(data_path)
 t = Transform()
-#l = Load()
+l = Load(results_path)  # noqa: E741
 
 #DATA MODEL FOR SHOES (TRANSFORM)
 
@@ -84,6 +83,7 @@ async def main() -> None:
     logger.info(f"Extracted {len(search_items)} search items.")
 
     search_res_df = t.create_df([search_results], search_results.keys())
+    l.load_into_parquet(search_res_df, "search_results")
 
     print(search_res_df)
 
@@ -92,6 +92,7 @@ async def main() -> None:
     logger.info(search_items[0])
     products_df = t.create_df(search_items, SearchItem.model_fields.keys())
     print(products_df)
+    l.load_into_parquet(products_df, "products")
 
 
 if __name__ == "__main__":
