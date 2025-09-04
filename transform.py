@@ -5,6 +5,8 @@ from pydantic import BaseModel
 
 
 class SearchItem(BaseModel):
+    """Data model for individual search items."""
+
     productId: str  # noqa: N815
     displayName: str  # noqa: N815
     division: str
@@ -12,6 +14,8 @@ class SearchItem(BaseModel):
     salePrice: float  # noqa: N815
 
 class SearchResults(BaseModel):
+    """Data model for search results."""
+
     count: int
     startIndex: int  # noqa: N815
     searchTerm: str  # noqa: N815
@@ -21,6 +25,7 @@ class SearchResults(BaseModel):
 class Transform:
     @staticmethod
     def search_results(data: dict) -> SearchResults:
+        """Transform search results data into a SearchResults model."""
         data["time_of_request"] = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
         return SearchResults(**data)
 

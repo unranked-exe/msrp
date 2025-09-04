@@ -5,17 +5,16 @@ from loguru import logger
 
 
 class Load:
+    """Class to handle loading DataFrames into Parquet files."""
+
     def __init__(self, res_dir: Path) -> None:
         self.res_dir = res_dir
         self.setup_results_folder()
 
     def setup_results_folder(self) -> None:
-        try:
-            Path.mkdir(self.res_dir)
-            logger.info(f"Directory '{self.res_dir}' created successfully.")
-
-        except FileExistsError:
-            logger.info(f"Directory '{self.res_dir}' already exists.")
+        """Create results directory if it doesn't exist."""
+        Path.mkdir(self.res_dir, exist_ok=False)
+        logger.info(f"Directory '{self.res_dir}' created successfully.")
 
     def load_into_parquet(self, df: pd.DataFrame, table_name: str) -> None:
         """Load a DataFrame into a Parquet file."""
