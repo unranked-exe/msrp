@@ -1,14 +1,15 @@
 import asyncio
-import json
 import os
 from pathlib import Path
 from urllib.parse import urlencode
 
-import pandas as pd
-from pydantic import BaseModel
-from rnet import Client, Impersonate
+from extract import Extractor
+from loader import Load
+from loguru import logger
+from transform import SearchItem, SearchResults, Transform
 
 data_path = Path("data_store")
+results_path = data_path / "results"
 datasheet_csv = data_path / "datasheet.csv"
 
 # FOR SCRAPING Manufacturer Website
@@ -20,19 +21,12 @@ try:
 except KeyError as e:
     raise ValueError(f"Missing environment variable: {e}")
 
+e = Extractor(data_path)
+t = Transform()
+l = Load(results_path)  # noqa: E741
 
 #DATA MODEL FOR SHOES (TRANSFORM)
-class SearchItem(BaseModel):
-    productId: str  # noqa: N815
-    displayName: str  # noqa: N815
-    division: str
-    price: float
 
-class SearchResults(BaseModel):
-    count: int
-    startIndex: int  # noqa: N815
-    searchTerm: str  # noqa: N815
-    items: list[SearchItem]
 
 #EXTRACTOR
 def prepare_query() -> str:
@@ -43,73 +37,67 @@ def prepare_query() -> str:
     }
     return f"{SEARCH_QUERY_BASE_URL}&{urlencode(params)}"
 
-def get_datasheet(data_path: Path) -> pd.DataFrame:
-    try:
-        return pd.read_csv(data_path)
-    except pd.errors.EmptyDataError as e:
-        print(f"Datasheet is empty: {e}")
-        return pd.DataFrame()  # Return an empty DataFrame on error
-    except Exception as e:
-        print(f"Error reading datasheet: {e}")
-        return pd.DataFrame()  # Return an empty DataFrame on error
-
-#TRANSFORM
-def get_json(data_path: Path) -> dict:
-    try:
-        with Path.open(data_path / "search_res.json") as f:
-            return json.load(f)
-    except FileNotFoundError as e:
-        print(f"JSON file not found: {e}")
-        return {}
-    except json.JSONDecodeError as e:
-        print(f"Error decoding JSON: {e}")
-        return {}
-
-#EXTRACTOR
-def create_client() -> Client:
-    return Client(impersonate=Impersonate.Chrome137)
+def test_url() -> str:
+    return f"{SEARCH_QUERY_BASE_URL}/p"
+# def get_datasheet(data_path: Path) -> pd.DataFrame:
+#     try:
+#         return pd.read_csv(data_path)
+#     except pd.errors.EmptyDataError as e:
+#         print(f"Datasheet is empty: {e}")
+#         return pd.DataFrame()  # Return an empty DataFrame on error
+#     except Exception as e:
+#         print(f"Error reading datasheet: {e}")
+#         return pd.DataFrame()  # Return an empty DataFrame on error
 
 #MIX OF EXTRACTOR AND TRANSFORM
-async def search_api(client: Client) -> None:
+def search_api() -> SearchResults:
     # THIS IS TO PREVENT EXCESS QUERIES BEING SENT TO API SO SAVED JSON LOCALLY ON FILE
     #response = await client.get(SEARCH_QUERY_URL)
     #print(response.status_code)
     #print(response.json())
-    json_res = get_json(data_path)
-    print(json_res)
-    #TRANSFORM
-    print(json_res["raw"]["itemList"])
-    return SearchResults(**json_res["raw"]["itemList"])
+    #json_res = get_json(data_path)
+    #print(json_res)
+    #DEVELOPMENT
+    logger.info("Fetching local JSON")
+    json_res = e.fetch_local_json("search_res.json") #TESTS IF LOCAL FILE CONTAINING SEARCH_API RES CAN BE READ FROM EXTRACTOR CLASS
 
-async def product_api(client: Client, search_item: SearchItem) -> None:
-    url = f"{PRODUCT_API_URL}{search_item.productId}"
-    response = await client.get(url)
-    print(response.status_code)
-    print(response.json())
+    essential_items = json_res["raw"]["itemList"]
 
+    #json_real_res = e.fetch_json(test_url()) #FETches testurl
+    results = t.search_results(essential_items)
+    #results.time_of_request = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+    logger.info(f"Transformed {results.count} items from search results.")
+    logger.info(type(results))
+    return results
 
 # TO REDO AND REDESIGN WITH NEW PROJECT IDEA
 async def main() -> None:
-    #datasheet_df = get_datasheet(datasheet_csv)
-    # Process the DataFrame
-    # print(datasheet_df.head())
 
-    # print(datasheet_df["Cat Description"].value_counts())
+    res = search_api()
+    logger.info("Attempting to convert search results to DataFrame")
+    search_results: dict[str, any] = dict(res)
+    search_items: list[SearchItem] = search_results.pop("items")
 
-    # print(datasheet_df.isna().sum())
+    logger.info(f"Extracted {len(search_items)} search items.")
 
-    # print(datasheet_df.duplicated().sum())
-    # print(datasheet_df[datasheet_df[["STYLE Description","GBP G - MSRP"]].duplicated()])
+    search_res_df = t.create_df([search_results], search_results.keys())
+    l.load_into_parquet(search_res_df, "search_results")
 
-    client = create_client()
-    search_results = await search_api(client)
-    product_api(client, search_results.items[0])
+    print(search_res_df)
+
+    search_items: list[dict[str, any]] = [dict(item) for item in search_items]
+    logger.info(type(search_items))
+    logger.info(search_items[0])
+    products_df = t.create_df(search_items, SearchItem.model_fields.keys())
+    print(products_df)
+    l.load_into_parquet(products_df, "products")
 
 
 if __name__ == "__main__":
     #run this for testing
     #await main()
+    print(test_url())
     print(PRODUCT_API_URL)
     print(prepare_query())
     asyncio.run(main())
-    print(PRODUCT_API_URL)
+    # print(PRODUCT_API_URL)
