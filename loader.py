@@ -13,7 +13,7 @@ class Load:
 
     def setup_results_folder(self) -> None:
         """Create results directory if it doesn't exist."""
-        Path.mkdir(self.res_dir, exist_ok=False)
+        Path.mkdir(self.res_dir, exist_ok=True)
         logger.info(f"Directory '{self.res_dir}' created successfully.")
 
     def load_into_parquet(self, df: pd.DataFrame, table_name: str) -> None:
