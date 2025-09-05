@@ -65,6 +65,7 @@ The project follows a modular design pattern with four main components:
 - **Async Support**: Concurrent processing capabilities for better performance
 - **Efficient Storage**: Parquet format for optimized data storage and analysis
 - **Timestamped Data**: Automatic request timestamps for data lineage tracking
+- **Containerized Deployment**: Docker support for consistent environments and easy deployment
 
 ## Project Structure
 
@@ -74,6 +75,8 @@ msrp/
 ├── extract.py           # Data extraction module
 ├── transform.py         # Data transformation and models
 ├── loader.py            # Data loading and persistence
+├── Dockerfile           # Docker container configuration
+├── .dockerignore        # Docker build context exclusions
 ├── data_store/          # Local data storage
 │   ├── search_res.json  # Cached search results
 │   ├── products_ex.json # Product examples
@@ -97,6 +100,8 @@ SEARCH_QUERY_BASE_URL=<your_search_api_endpoint>
 
 ## Usage
 
+### Local Development
+
 1. **Set up environment variables** for API endpoints
 2. **Run the main script**:
 
@@ -106,6 +111,40 @@ SEARCH_QUERY_BASE_URL=<your_search_api_endpoint>
 
 3. **View results** in logs, `data_store/` directory, and `results/` directory for Parquet files
 
+### Docker Deployment
+
+The project includes Docker support for consistent deployment across environments:
+
+1. **Build the Docker image**:
+
+   ```bash
+   docker build -t msrp-scraper .
+   ```
+
+2. **Run the container**:
+
+   ```bash
+   docker run --env-file .env -v $(pwd)/data_store:/app/data_store -v $(pwd)/results:/app/results msrp-scraper
+   ```
+
+3. **For development with mounted volumes**:
+
+   ```bash
+   docker run -it --env-file .env \
+     -v $(pwd)/data_store:/app/data_store \
+     -v $(pwd)/results:/app/results \
+     -v $(pwd):/app \
+     msrp-scraper bash
+   ```
+
+#### Docker Features
+
+- **Multi-stage build**: Optimized image size using Python 3.13 slim base
+- **UV package manager**: Fast dependency resolution and installation
+- **Build caching**: Efficient rebuild times with proper layer caching
+- **Volume mounting**: Persistent data storage for results and cache
+- **Environment isolation**: Consistent runtime environment across deployments
+
 ## Technologies Used
 
 - **Python 3.13+**: Core language
@@ -114,6 +153,8 @@ SEARCH_QUERY_BASE_URL=<your_search_api_endpoint>
 - **loguru**: Advanced logging
 - **tenacity**: Retry mechanisms
 - **pandas**: Data manipulation (future analysis)
+- **Docker**: Containerization for consistent deployment
+- **UV**: Fast Python package manager for dependency management
 
 ## Development Notes
 
@@ -121,6 +162,8 @@ SEARCH_QUERY_BASE_URL=<your_search_api_endpoint>
 - **Query Configuration**: Currently configured for men's shoes, size 10 (UK sizing)
 - **Extensible Design**: Easy to extend for other product categories, sizes, or additional data sources
 - **Responsible Scraping**: Tools like [Technical SEO robots.txt checker](https://technicalseo.com/tools/robots-txt/) were used to ensure responsible scraping practices
+- **Containerization**: Docker setup ensures consistent environment across development, testing, and production
+- **Build Optimization**: Multi-stage Docker build with caching for efficient image creation
 
 ## Recent Changes
 
