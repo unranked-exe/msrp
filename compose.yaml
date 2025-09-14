@@ -1,14 +1,14 @@
 services:
     postgres:
       image: postgres:17.6
-      
+      container_name: db
       restart: always
       environment:
         - POSTGRES_DB=msrp_testing
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=postgres
       ports:
-        - '5432:5432'
+        - '5433:5432'
       volumes:
         - ./postgres-data:/var/lib/postgresql/data
       healthcheck:

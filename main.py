@@ -97,6 +97,8 @@ async def main() -> None:
     products_df = t.create_df(search_items, SearchItem.model_fields.keys())
     print(products_df)
     l.load_into_parquet(products_df, "products")
+    l.save_to_db(products_df, "products")
+    logger.info("DataFrames loaded complete")
 
 
 if __name__ == "__main__":

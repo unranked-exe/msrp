@@ -8,9 +8,11 @@ dependencies = [
     "jupyter>=1.1.1",
     "loguru>=0.7.3",
     "pandas>=2.3.2",
+    "psycopg2>=2.9.10",
     "pyarrow>=21.0.0",
     "pydantic>=2.11.7",
     "rnet>=2.4.2",
+    "sqlalchemy>=2.0.43",
     "tenacity>=9.1.2",
 ]
 UV_ENV_FILE =".env"
