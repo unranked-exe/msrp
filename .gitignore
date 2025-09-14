@@ -15,3 +15,6 @@ data_store/
 #Prevent Scalene profiler report from committing
 *.html
 *.json
+
+#Postgres data
+postgres-data/

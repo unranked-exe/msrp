@@ -13,6 +13,7 @@ class SearchItem(BaseModel):
     price: float
     salePrice: float  # noqa: N815
 
+
 class SearchResults(BaseModel):
     """Data model for search results."""
 
@@ -21,6 +22,7 @@ class SearchResults(BaseModel):
     searchTerm: str  # noqa: N815
     items: list[SearchItem]
     time_of_request: str
+
 
 class Transform:
     @staticmethod
@@ -32,7 +34,6 @@ class Transform:
     @staticmethod
     def create_df(data: list[dict], columns: list) -> pd.DataFrame:
         return pd.DataFrame(data, columns=columns)
-
 
     @staticmethod
     def append_to_df(df: pd.DataFrame, data: dict[str, any]) -> pd.DataFrame:

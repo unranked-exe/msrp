@@ -1,4 +1,3 @@
-
 import asyncio
 import json
 from pathlib import Path
@@ -14,7 +13,6 @@ class Extractor:
         self.session = Client(impersonate=Impersonate.Chrome137)
         self.blocking_session = BlockingClient(impersonate=Impersonate.Chrome137)
         logger.info("Extractor initialized with rnet Client.")
-
 
     def fetch_local_json(self, file_path: str) -> dict:
         try:

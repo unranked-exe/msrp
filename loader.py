@@ -20,6 +20,8 @@ class Load:
         """Load a DataFrame into a Parquet file."""
         try:
             df.to_parquet(self.res_dir / f"{table_name}.parquet")
-            logger.info(f"DataFrame loaded into {self.res_dir / f'{table_name}.parquet'}")
+            logger.info(
+                f"DataFrame loaded into {self.res_dir / f'{table_name}.parquet'}"
+            )
         except Exception as e:
             logger.error(f"Error loading DataFrame into Parquet: {e}")

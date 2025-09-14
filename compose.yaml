@@ -1,0 +1,48 @@
+services:
+    postgres:
+      image: postgres:17.6
+      
+      restart: always
+      environment:
+        - POSTGRES_DB=msrp_testing
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+      ports:
+        - '5432:5432'
+      volumes:
+        - ./postgres-data:/var/lib/postgresql/data
+      healthcheck:
+        test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+        interval: 5s
+        timeout: 5s
+        retries: 5
+      networks:
+        - msrp_testing_network
+    test:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      volumes:
+        - .:/app
+      command: python3 -m pytest
+    run:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      depends_on:
+        postgres:
+          condition: service_healthy
+      environment:
+        - PRODUCT_API_URL=${PRODUCT_API_URL:-}
+        - SEARCH_QUERY_BASE_URL=${SEARCH_QUERY_BASE_URL:-}
+
+      volumes:
+        - .:/app
+        - /app/.venv 
+      command: uv run main.py
+      networks:
+        - msrp_testing_network
+
+networks:
+    msrp_testing_network:
+        driver: bridge
