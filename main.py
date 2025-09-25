@@ -7,6 +7,7 @@ from extract import Extractor
 from loader import Load
 from loguru import logger
 from transform import SearchItem, SearchResults, Transform
+import time
 
 data_path = Path("data_store")
 results_path = data_path / "results"
@@ -22,10 +23,22 @@ except KeyError as e:
     raise ValueError(f"Missing environment variable: {e}")
 
 e = Extractor(data_path)
-t = Transform()
 l = Load(results_path)  # noqa: E741
+t = Transform()
 
-# DATA MODEL FOR SHOES (TRANSFORM)
+
+# Tables to create in the database
+dict_of__staging_tables = {
+    "search_results": """id SERIAL PRIMARY KEY,
+                      searchTerm VARCHAR(255),
+                      startIndex INTEGER,
+                      time_of_request TIMESTAMP""",
+    "products": """product_id VARCHAR(9) PRIMARY KEY,
+                   display_name VARCHAR(255),
+                   division VARCHAR(100),
+                   price FLOAT,
+                   sale_price FLOAT"""
+}
 
 
 # EXTRACTOR
@@ -54,7 +67,9 @@ def test_url() -> str:
 
 
 # MIX OF EXTRACTOR AND TRANSFORM
-def search_api() -> SearchResults:
+def search_api() -> dict:
+    """Fetches JSON response from search API
+    \nADDS time of request to the dict"""
     # THIS IS TO PREVENT EXCESS QUERIES BEING SENT TO API SO SAVED JSON LOCALLY ON FILE
     # response = await client.get(SEARCH_QUERY_URL)
     # print(response.status_code)
@@ -68,37 +83,54 @@ def search_api() -> SearchResults:
     )  # TESTS IF LOCAL FILE CONTAINING SEARCH_API RES CAN BE READ FROM EXTRACTOR CLASS
 
     essential_items = json_res["raw"]["itemList"]
-
+    # Adds timestamp to the dict
+    essential_items["time_of_request"] = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+    return essential_items
     # json_real_res = e.fetch_json(test_url()) #FETches testurl
-    results = t.search_results(essential_items)
+    #results = t.search_results(essential_items)
+
+
+
     # results.time_of_request = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
-    logger.info(f"Transformed {results.count} items from search results.")
-    logger.info(type(results))
-    return results
+    #logger.info(f"Transformed {results.count} items from search results.")
+    #logger.info(type(results))
+    #return results
+
+#def items_api():
+
 
 
 # TO REDO AND REDESIGN WITH NEW PROJECT IDEA
 async def main() -> None:
+    
     res = search_api()
-    logger.info("Attempting to convert search results to DataFrame")
-    search_results: dict[str, any] = dict(res)
-    search_items: list[SearchItem] = search_results.pop("items")
+    
+    # CREATE TABLES IN THE DATABASE
+    for table_name, attributes in dict_of__staging_tables.items():
+        l.create_raw_product_table(table_name, attributes)
 
-    logger.info(f"Extracted {len(search_items)} search items.")
 
-    search_res_df = t.create_df([search_results], search_results.keys())
-    l.load_into_parquet(search_res_df, "search_results")
+    # logger.info("Attempting to convert search results to DataFrame")
+    # search_results: dict[str, any] = dict(res)
+    # search_items: list[SearchItem] = search_results.pop("items")
 
-    print(search_res_df)
+    # logger.info(f"Extracted {len(search_items)} search items.")
 
-    search_items: list[dict[str, any]] = [dict(item) for item in search_items]
-    logger.info(type(search_items))
-    logger.info(search_items[0])
-    products_df = t.create_df(search_items, SearchItem.model_fields.keys())
-    print(products_df)
-    l.load_into_parquet(products_df, "products")
-    l.save_to_db(products_df, "products")
-    logger.info("DataFrames loaded complete")
+    # search_res_df = t.create_df([search_results], search_results.keys())
+    # l.load_into_parquet(search_res_df, "search_results")
+
+    # print(search_res_df)
+
+    # search_items: list[dict[str, any]] = [dict(item) for item in search_items]
+    # logger.info(type(search_items))
+    # logger.info(search_items[0])
+    # products_df = t.create_df(search_items, SearchItem.model_fields.keys())
+    # print(products_df)
+    # l.load_into_parquet(products_df, "products")
+    # #l.save_to_db(products_df, "products")
+    # logger.info("DataFrames loaded complete")
+    # l.create_table("products")
+    # logger.info("Table creation attempted")
 
 
 if __name__ == "__main__":
