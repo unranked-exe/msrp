@@ -155,15 +155,30 @@ def search_api() -> dict:
 
 #def items_api():
 
-def insert_search_res_into_db(essential_items: dict) -> None:
+def insert_search_res_into_db(essential_items: dict) -> None | int:
 
-    l.insert_into_db(l.dict_of__staging_tables["search_results"].insert().values(
-        search_term=essential_items["searchTerm"],
-        start_index=essential_items["startIndex"],
-        count=essential_items["count"],
-        time_of_request=essential_items["time_of_request"]
-    ))
+    obj = l.insert_into_db("search_results", {
+        "search_term": essential_items["searchTerm"],
+        "start_index": essential_items["startIndex"],
+        "count": essential_items["count"],
+        "time_of_request": essential_items["time_of_request"]
+    })
+    logger.info(f"Inserted search result with ID: {obj.inserted_primary_key[0]}")
+    return obj.inserted_primary_key[0]
 
+
+def insert_products_into_db(items: list[dict], search_res_fk: int) -> None :
+    obj = l.insert_into_db("products", [
+        {
+            "product_id": item["productId"],
+            "display_name": item["displayName"],
+            "division": item["division"],
+            "price": item["price"],
+            "sale_price": item.get("salePrice"),  # Use .get() to handle missing salePrice
+            "search_result_id": search_res_fk
+        }
+        for item in items
+    ])
 
 # TO REDO AND REDESIGN WITH NEW PROJECT IDEA
 async def main() -> None:
@@ -174,8 +189,13 @@ async def main() -> None:
 
     res = search_api()
     print(res['searchTerm'], res['count'], res['startIndex'], res['time_of_request'])
-    insert_search_res_into_db(res)
+    search_res_fk = insert_search_res_into_db(res)
     logger.info("Search results inserted into database.")
+    items = res['items']
+    logger.info(f"Processing {len(items)} items.")
+    insert_products_into_db(items, search_res_fk)
+    logger.info("Products inserted into database.")
+
 
 
     # logger.info("Attempting to convert search results to DataFrame")

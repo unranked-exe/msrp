@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pandas as pd
 from loguru import logger
-from sqlalchemy import Table, Column, ForeignKey, Integer, Float, String, DateTime, create_engine, MetaData, Insert
+from sqlalchemy import Table, Column, ForeignKey, Integer, Float, String, DateTime, create_engine, MetaData, insert, Result
 
 class Load:
     """Class to handle loading DataFrames into Parquet files and Databases."""
@@ -63,12 +63,13 @@ class Load:
         except Exception as e:
             logger.error(f"Error loading DataFrame into Parquet: {e}")
 
-    def insert_into_db(self, query: Insert) -> None:
+    def insert_into_db(self, table_name: str, values: list[dict]) -> None | Result:
         """Insert data into the database."""
         with self.engine.connect() as conn:
-            conn.execute(query)
+            result = conn.execute(insert(self.dict_of__staging_tables[table_name]), values)
             conn.commit()
             logger.info("Data inserted into database.")
+            return result
 
     # def save_to_db(self, df: pd.DataFrame, table_name: str) -> None:
     #     """Save a DataFrame to a PostgreSQL database."""
