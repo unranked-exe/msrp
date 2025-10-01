@@ -11,7 +11,6 @@ class Load:
         self.res_dir = res_dir
         self.setup_results_folder()
         self.engine = create_engine("postgresql+psycopg2://postgres:postgres@db:5432/msrp_testing")
-        # self.conn = self.connect_to_db()
         self.metadata = MetaData()
         self.dict_of__staging_tables = {}
         self.setup_tables()
@@ -64,11 +63,19 @@ class Load:
             logger.error(f"Error loading DataFrame into Parquet: {e}")
 
     def insert_into_db(self, table_name: str, values: list[dict]) -> None | Result:
-        """Insert data into the database."""
+        """Insert data into the specified table in db specified in the (loader) class.
+        Performs bulk insert for multiple rows.
+
+        Parameters:
+            table_name (str): Name of the table to insert data into. The table must be predefined in the (loader) class.
+            values (list[dict]): List of dictionaries containing the data to insert. Each dictionary represents a row.
+        Returns:
+            Result (Result): The result of the insert operation, which includes metadata about the operation.
+        """
         with self.engine.connect() as conn:
             result = conn.execute(insert(self.dict_of__staging_tables[table_name]), values)
             conn.commit()
-            logger.info("Data inserted into database.")
+            logger.info(f"Data inserted into table '{table_name}'.")
             return result
 
     # def save_to_db(self, df: pd.DataFrame, table_name: str) -> None:
