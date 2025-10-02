@@ -2,8 +2,7 @@ from pathlib import Path
 
 import pandas as pd
 from loguru import logger
-from sqlalchemy import create_engine
-
+from sqlalchemy import Table, Column, ForeignKey, Integer, Float, String, DateTime, create_engine, MetaData, insert, Result
 
 class Load:
     """Class to handle loading DataFrames into Parquet files and Databases."""
@@ -12,11 +11,46 @@ class Load:
         self.res_dir = res_dir
         self.setup_results_folder()
         self.engine = create_engine("postgresql+psycopg2://postgres:postgres@db:5432/msrp_testing")
+        self.metadata = MetaData()
+        self.dict_of__staging_tables = {}
+        self.setup_tables()
+        self.metadata.create_all(self.engine)
+        logger.info("Database tables created successfully.")
+        
+        
 
     def setup_results_folder(self) -> None:
         """Create results directory if it doesn't exist."""
         Path.mkdir(self.res_dir, exist_ok=True)
         logger.info(f"Directory '{self.res_dir}' created successfully.")
+
+    def setup_tables(self) -> None:
+        search_results = Table(
+            'search_results',
+            self.metadata,
+            Column('id', Integer, primary_key=True),
+            Column('search_term', String),
+            Column('start_index', Integer),
+            Column('count', Integer),
+            Column('time_of_request', DateTime)
+        )
+
+        products = Table(
+            'products',
+            self.metadata,
+            Column('id', Integer, primary_key=True),
+            Column('product_id', String(9)),
+            Column('display_name', String(255)),
+            Column('division', String(100)),
+            Column('price', Float),
+            Column('sale_price', Float, nullable=True),
+            Column('search_result_id', ForeignKey('search_results.id'))
+        )
+        self.dict_of__staging_tables = {
+            "search_results": search_results,
+            "products": products
+        }
+        logger.info("Tables set up successfully.")
 
     def load_into_parquet(self, df: pd.DataFrame, table_name: str) -> None:
         """Load a DataFrame into a Parquet file."""
@@ -27,11 +61,27 @@ class Load:
             )
         except Exception as e:
             logger.error(f"Error loading DataFrame into Parquet: {e}")
-    
-    def save_to_db(self, df: pd.DataFrame, table_name: str) -> None:
-        """Save a DataFrame to a PostgreSQL database."""
-        try:
-            df.to_sql(table_name, self.engine, if_exists='append', index=False)
-            logger.info(f"DataFrame saved to table '{table_name}' in the database.")
-        except Exception as e:
-            logger.error(f"Error saving DataFrame to database: {e}")
+
+    def insert_into_db(self, table_name: str, values: list[dict]) -> None | Result:
+        """Insert data into the specified table in db specified in the (loader) class.
+        Performs bulk insert for multiple rows.
+
+        Parameters:
+            table_name (str): Name of the table to insert data into. The table must be predefined in the (loader) class.
+            values (list[dict]): List of dictionaries containing the data to insert. Each dictionary represents a row.
+        Returns:
+            Result (Result): The result of the insert operation, which includes metadata about the operation.
+        """
+        with self.engine.connect() as conn:
+            result = conn.execute(insert(self.dict_of__staging_tables[table_name]), values)
+            conn.commit()
+            logger.info(f"Data inserted into table '{table_name}'.")
+            return result
+
+    # def save_to_db(self, df: pd.DataFrame, table_name: str) -> None:
+    #     """Save a DataFrame to a PostgreSQL database."""
+    #     try:
+    #         df.to_sql(table_name, self.engine, if_exists='append', index=False)
+    #         logger.info(f"DataFrame saved to table '{table_name}' in the database.")
+    #     except Exception as e:
+    #         logger.error(f"Error saving DataFrame to database: {e}")
