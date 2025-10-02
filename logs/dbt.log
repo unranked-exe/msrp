@@ -1,0 +1,255 @@
+[0m15:17:56.997438 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000203F1894D70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000203EDC9C050>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000203F320B9D0>]}
+
+
+============================== 15:17:57.093351 | fd12b415-5f2e-40c7-bf32-71f2c3176906 ==============================
+[0m15:17:57.093351 [info ] [MainThread]: Running with dbt=1.10.13
+[0m15:17:57.094351 [debug] [MainThread]: running dbt with arguments {'partial_parse': 'True', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True', 'version_check': 'True', 'cache_selected_only': 'False', 'target_path': 'None', 'warn_error': 'None', 'invocation_command': 'dbt init', 'log_format': 'default', 'use_colors': 'True', 'introspect': 'True', 'debug': 'False', 'log_cache_events': 'False', 'fail_fast': 'False', 'no_print': 'None', 'empty': 'None', 'quiet': 'False', 'printer_width': '80', 'use_experimental_parser': 'False', 'log_path': 'logs', 'indirect_selection': 'eager', 'profiles_dir': 'C:\\Users\\havey\\.dbt', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'write_json': 'True'}
+[0m15:17:57.426730 [info ] [MainThread]: Creating dbt configuration folder at C:\Users\havey\.dbt
+[0m15:18:54.526224 [debug] [MainThread]: Starter project path: C:\Users\havey\Documents\msrp_v2\msrp\.venv\Lib\site-packages\dbt\include\starter_project
+[0m15:18:54.565260 [info ] [MainThread]: 
+Your new dbt project "dbt_msrp" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m15:18:54.566122 [info ] [MainThread]: Setting up your profile.
+[0m15:24:21.654641 [info ] [MainThread]: Profile dbt_msrp written to C:\Users\havey\.dbt\profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m15:24:21.656211 [debug] [MainThread]: Command `dbt init` succeeded at 15:24:21.656046 after 384.79 seconds
+[0m15:24:21.656566 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000203F3C02FD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000203F399E450>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000203F37438A0>]}
+[0m15:24:21.656916 [debug] [MainThread]: Flushing usage events
+[0m15:24:22.486544 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:24:41.131746 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021A09DA7A10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021A05BDEFD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021A0BFA7D90>]}
+
+
+============================== 15:24:41.135652 | 602274c7-fabc-4889-82b4-58c2aa55800c ==============================
+[0m15:24:41.135652 [info ] [MainThread]: Running with dbt=1.10.13
+[0m15:24:41.136276 [debug] [MainThread]: running dbt with arguments {'partial_parse': 'True', 'write_json': 'True', 'send_anonymous_usage_stats': 'True', 'use_colors': 'True', 'cache_selected_only': 'False', 'target_path': 'None', 'version_check': 'True', 'invocation_command': 'dbt debug', 'log_format': 'default', 'warn_error': 'None', 'introspect': 'True', 'debug': 'False', 'printer_width': '80', 'fail_fast': 'False', 'no_print': 'None', 'empty': 'None', 'quiet': 'False', 'use_experimental_parser': 'False', 'log_cache_events': 'False', 'log_path': 'logs', 'indirect_selection': 'eager', 'profiles_dir': 'C:\\Users\\havey\\.dbt', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])'}
+[0m15:24:41.181343 [info ] [MainThread]: dbt version: 1.10.13
+[0m15:24:41.181803 [info ] [MainThread]: python version: 3.13.5
+[0m15:24:41.182090 [info ] [MainThread]: python path: C:\Users\havey\Documents\msrp_v2\msrp\.venv\Scripts\python.exe
+[0m15:24:41.182327 [info ] [MainThread]: os info: Windows-11-10.0.26100-SP0
+[0m15:24:41.229388 [info ] [MainThread]: Using profiles dir at C:\Users\havey\.dbt
+[0m15:24:41.229981 [info ] [MainThread]: Using profiles.yml file at C:\Users\havey\.dbt\profiles.yml
+[0m15:24:41.230415 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\havey\Documents\msrp_v2\msrp\dbt_project.yml
+[0m15:24:41.250863 [info ] [MainThread]: adapter type: postgres
+[0m15:24:41.251587 [info ] [MainThread]: adapter version: 1.9.1
+[0m15:24:41.252209 [info ] [MainThread]: Configuration:
+[0m15:24:41.252712 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m15:24:41.252988 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m15:24:41.253265 [info ] [MainThread]: Required dependencies:
+[0m15:24:41.253568 [debug] [MainThread]: Executing "git --help"
+[0m15:24:41.282355 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m15:24:41.282757 [debug] [MainThread]: STDERR: "b''"
+[0m15:24:41.283049 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m15:24:41.283560 [info ] [MainThread]: Connection:
+[0m15:24:41.283863 [info ] [MainThread]:   host: db
+[0m15:24:41.284094 [info ] [MainThread]:   port: 5433
+[0m15:24:41.284302 [info ] [MainThread]:   user: postgres
+[0m15:24:41.284496 [info ] [MainThread]:   database: msrp_testing
+[0m15:24:41.284738 [info ] [MainThread]:   schema: dev
+[0m15:24:41.284941 [info ] [MainThread]:   connect_timeout: 10
+[0m15:24:41.285216 [info ] [MainThread]:   role: None
+[0m15:24:41.285562 [info ] [MainThread]:   search_path: None
+[0m15:24:41.285937 [info ] [MainThread]:   keepalives_idle: 0
+[0m15:24:41.286289 [info ] [MainThread]:   sslmode: None
+[0m15:24:41.286652 [info ] [MainThread]:   sslcert: None
+[0m15:24:41.287028 [info ] [MainThread]:   sslkey: None
+[0m15:24:41.287300 [info ] [MainThread]:   sslrootcert: None
+[0m15:24:41.287560 [info ] [MainThread]:   application_name: dbt
+[0m15:24:41.287815 [info ] [MainThread]:   retries: 1
+[0m15:24:41.288509 [info ] [MainThread]: Registered adapter: postgres=1.9.1
+[0m15:24:41.462417 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m15:24:44.699374 [debug] [MainThread]: Using postgres connection "debug"
+[0m15:24:44.699665 [debug] [MainThread]: On debug: select 1 as id
+[0m15:24:44.699842 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:24:47.418514 [debug] [MainThread]: Postgres adapter: Got a retryable error when attempting to open a postgres connection.
+1 attempts remaining. Retrying in 0 seconds.
+Error:
+could not translate host name "db" to address: Name or service not known
+
+[0m15:24:50.120041 [debug] [MainThread]: Postgres adapter: Error running SQL: select 1 as id
+[0m15:24:50.120661 [debug] [MainThread]: Postgres adapter: Rolling back transaction.
+[0m15:24:50.121101 [debug] [MainThread]: On debug: No close available on handle
+[0m15:24:50.121467 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m15:24:50.122200 [info ] [MainThread]: [31m2 checks failed:[0m
+[0m15:24:50.122591 [info ] [MainThread]: Project loading failed for the following reason:
+ project path <C:\Users\havey\Documents\msrp_v2\msrp\dbt_project.yml> not found
+
+[0m15:24:50.122924 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  could not translate host name "db" to address: Name or service not known
+  
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m15:24:50.123940 [debug] [MainThread]: Command `dbt debug` failed at 15:24:50.123789 after 9.12 seconds
+[0m15:24:50.124223 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m15:24:50.124471 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021A0C252650>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021A0C24AB10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021A0C063240>]}
+[0m15:24:50.124781 [debug] [MainThread]: Flushing usage events
+[0m15:24:50.750422 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:30:25.172907 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025C89D5BA10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025C85B4EFD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025C8BF57D90>]}
+
+
+============================== 15:30:25.177666 | 48172ed2-cfdd-4259-a2e1-972651bcc7e3 ==============================
+[0m15:30:25.177666 [info ] [MainThread]: Running with dbt=1.10.13
+[0m15:30:25.178191 [debug] [MainThread]: running dbt with arguments {'partial_parse': 'True', 'profiles_dir': 'C:\\Users\\havey\\.dbt', 'send_anonymous_usage_stats': 'True', 'warn_error': 'None', 'cache_selected_only': 'False', 'target_path': 'None', 'use_colors': 'True', 'invocation_command': 'dbt debug', 'log_format': 'default', 'version_check': 'True', 'introspect': 'True', 'debug': 'False', 'printer_width': '80', 'fail_fast': 'False', 'no_print': 'None', 'empty': 'None', 'quiet': 'False', 'log_cache_events': 'False', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'log_path': 'logs', 'write_json': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'static_parser': 'True'}
+[0m15:30:25.201713 [info ] [MainThread]: dbt version: 1.10.13
+[0m15:30:25.202432 [info ] [MainThread]: python version: 3.13.5
+[0m15:30:25.202854 [info ] [MainThread]: python path: C:\Users\havey\Documents\msrp_v2\msrp\.venv\Scripts\python.exe
+[0m15:30:25.203120 [info ] [MainThread]: os info: Windows-11-10.0.26100-SP0
+[0m15:30:25.269908 [info ] [MainThread]: Using profiles dir at C:\Users\havey\.dbt
+[0m15:30:25.270454 [info ] [MainThread]: Using profiles.yml file at C:\Users\havey\.dbt\profiles.yml
+[0m15:30:25.270752 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\havey\Documents\msrp_v2\msrp\dbt_project.yml
+[0m15:30:25.271863 [info ] [MainThread]: adapter type: postgres
+[0m15:30:25.272212 [info ] [MainThread]: adapter version: 1.9.1
+[0m15:30:25.272485 [info ] [MainThread]: Configuration:
+[0m15:30:25.272685 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m15:30:25.272880 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m15:30:25.273065 [info ] [MainThread]: Required dependencies:
+[0m15:30:25.273268 [debug] [MainThread]: Executing "git --help"
+[0m15:30:25.303703 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m15:30:25.304109 [debug] [MainThread]: STDERR: "b''"
+[0m15:30:25.304402 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m15:30:25.304713 [info ] [MainThread]: Connection:
+[0m15:30:25.304950 [info ] [MainThread]:   host: db
+[0m15:30:25.305147 [info ] [MainThread]:   port: 5433
+[0m15:30:25.305392 [info ] [MainThread]:   user: postgres
+[0m15:30:25.305586 [info ] [MainThread]:   database: msrp_testing
+[0m15:30:25.305764 [info ] [MainThread]:   schema: dev
+[0m15:30:25.305938 [info ] [MainThread]:   connect_timeout: 10
+[0m15:30:25.306127 [info ] [MainThread]:   role: None
+[0m15:30:25.306304 [info ] [MainThread]:   search_path: None
+[0m15:30:25.306476 [info ] [MainThread]:   keepalives_idle: 0
+[0m15:30:25.306646 [info ] [MainThread]:   sslmode: None
+[0m15:30:25.306824 [info ] [MainThread]:   sslcert: None
+[0m15:30:25.306996 [info ] [MainThread]:   sslkey: None
+[0m15:30:25.307164 [info ] [MainThread]:   sslrootcert: None
+[0m15:30:25.307478 [info ] [MainThread]:   application_name: dbt
+[0m15:30:25.307788 [info ] [MainThread]:   retries: 1
+[0m15:30:25.308286 [info ] [MainThread]: Registered adapter: postgres=1.9.1
+[0m15:30:25.508799 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m15:30:25.562341 [debug] [MainThread]: Using postgres connection "debug"
+[0m15:30:25.562632 [debug] [MainThread]: On debug: select 1 as id
+[0m15:30:25.562809 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:30:28.299148 [debug] [MainThread]: Postgres adapter: Got a retryable error when attempting to open a postgres connection.
+1 attempts remaining. Retrying in 0 seconds.
+Error:
+could not translate host name "db" to address: Name or service not known
+
+[0m15:30:30.993133 [debug] [MainThread]: Postgres adapter: Error running SQL: select 1 as id
+[0m15:30:30.993810 [debug] [MainThread]: Postgres adapter: Rolling back transaction.
+[0m15:30:30.994325 [debug] [MainThread]: On debug: No close available on handle
+[0m15:30:30.994858 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m15:30:30.996075 [info ] [MainThread]: [31m2 checks failed:[0m
+[0m15:30:30.997055 [info ] [MainThread]: Project loading failed for the following reason:
+ project path <C:\Users\havey\Documents\msrp_v2\msrp\dbt_project.yml> not found
+
+[0m15:30:30.998076 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  could not translate host name "db" to address: Name or service not known
+  
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m15:30:31.000287 [debug] [MainThread]: Command `dbt debug` failed at 15:30:31.000082 after 5.95 seconds
+[0m15:30:31.000744 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m15:30:31.001111 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025C8C169A70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025C8C15A7B0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025C8BFE3240>]}
+[0m15:30:31.001516 [debug] [MainThread]: Flushing usage events
+[0m15:30:31.703673 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:40:10.889619 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000022D240EBA10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000022D1FF2EFD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000022D262E7D90>]}
+
+
+============================== 15:40:10.893258 | c4422744-56a8-4540-8666-726e225b3d80 ==============================
+[0m15:40:10.893258 [info ] [MainThread]: Running with dbt=1.10.13
+[0m15:40:10.893788 [debug] [MainThread]: running dbt with arguments {'partial_parse': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'send_anonymous_usage_stats': 'True', 'warn_error': 'None', 'cache_selected_only': 'False', 'target_path': 'None', 'version_check': 'True', 'invocation_command': 'dbt debug', 'log_format': 'default', 'use_colors': 'True', 'introspect': 'True', 'debug': 'False', 'log_cache_events': 'False', 'fail_fast': 'False', 'no_print': 'None', 'quiet': 'False', 'printer_width': '80', 'use_experimental_parser': 'False', 'empty': 'None', 'log_path': 'logs', 'indirect_selection': 'eager', 'profiles_dir': 'C:\\Users\\havey\\.dbt', 'static_parser': 'True', 'write_json': 'True'}
+[0m15:40:10.909749 [info ] [MainThread]: dbt version: 1.10.13
+[0m15:40:10.910381 [info ] [MainThread]: python version: 3.13.5
+[0m15:40:10.910674 [info ] [MainThread]: python path: C:\Users\havey\Documents\msrp_v2\msrp\.venv\Scripts\python.exe
+[0m15:40:10.910904 [info ] [MainThread]: os info: Windows-11-10.0.26100-SP0
+[0m15:40:10.957818 [info ] [MainThread]: Using profiles dir at C:\Users\havey\.dbt
+[0m15:40:10.958407 [info ] [MainThread]: Using profiles.yml file at C:\Users\havey\.dbt\profiles.yml
+[0m15:40:10.958764 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\havey\Documents\msrp_v2\msrp\dbt_project.yml
+[0m15:40:10.960011 [info ] [MainThread]: adapter type: postgres
+[0m15:40:10.960333 [info ] [MainThread]: adapter version: 1.9.1
+[0m15:40:10.960696 [info ] [MainThread]: Configuration:
+[0m15:40:10.961075 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m15:40:10.961419 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m15:40:10.961666 [info ] [MainThread]: Required dependencies:
+[0m15:40:10.962014 [debug] [MainThread]: Executing "git --help"
+[0m15:40:10.988299 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m15:40:10.988719 [debug] [MainThread]: STDERR: "b''"
+[0m15:40:10.989017 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m15:40:10.989475 [info ] [MainThread]: Connection:
+[0m15:40:10.989873 [info ] [MainThread]:   host: db
+[0m15:40:10.990178 [info ] [MainThread]:   port: 5432
+[0m15:40:10.990452 [info ] [MainThread]:   user: postgres
+[0m15:40:10.990814 [info ] [MainThread]:   database: msrp_testing
+[0m15:40:10.991327 [info ] [MainThread]:   schema: dev
+[0m15:40:10.991709 [info ] [MainThread]:   connect_timeout: 10
+[0m15:40:10.992024 [info ] [MainThread]:   role: None
+[0m15:40:10.992319 [info ] [MainThread]:   search_path: None
+[0m15:40:10.992762 [info ] [MainThread]:   keepalives_idle: 0
+[0m15:40:10.993284 [info ] [MainThread]:   sslmode: None
+[0m15:40:10.993573 [info ] [MainThread]:   sslcert: None
+[0m15:40:10.993813 [info ] [MainThread]:   sslkey: None
+[0m15:40:10.994137 [info ] [MainThread]:   sslrootcert: None
+[0m15:40:10.994385 [info ] [MainThread]:   application_name: dbt
+[0m15:40:10.994585 [info ] [MainThread]:   retries: 1
+[0m15:40:10.994989 [info ] [MainThread]: Registered adapter: postgres=1.9.1
+[0m15:40:11.162924 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m15:40:11.214345 [debug] [MainThread]: Using postgres connection "debug"
+[0m15:40:11.214634 [debug] [MainThread]: On debug: select 1 as id
+[0m15:40:11.214831 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:40:13.942080 [debug] [MainThread]: Postgres adapter: Got a retryable error when attempting to open a postgres connection.
+1 attempts remaining. Retrying in 0 seconds.
+Error:
+could not translate host name "db" to address: Name or service not known
+
+[0m15:40:16.629915 [debug] [MainThread]: Postgres adapter: Error running SQL: select 1 as id
+[0m15:40:16.630707 [debug] [MainThread]: Postgres adapter: Rolling back transaction.
+[0m15:40:16.631566 [debug] [MainThread]: On debug: No close available on handle
+[0m15:40:16.632273 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m15:40:16.633171 [info ] [MainThread]: [31m2 checks failed:[0m
+[0m15:40:16.633985 [info ] [MainThread]: Project loading failed for the following reason:
+ project path <C:\Users\havey\Documents\msrp_v2\msrp\dbt_project.yml> not found
+
+[0m15:40:16.634709 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  could not translate host name "db" to address: Name or service not known
+  
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m15:40:16.635737 [debug] [MainThread]: Command `dbt debug` failed at 15:40:16.635637 after 5.87 seconds
+[0m15:40:16.635961 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m15:40:16.636162 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000022D264F9A70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000022D264EA7B0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000022D26373240>]}
+[0m15:40:16.636415 [debug] [MainThread]: Flushing usage events
+[0m15:40:17.319088 [debug] [MainThread]: An error was encountered while trying to flush usage events
